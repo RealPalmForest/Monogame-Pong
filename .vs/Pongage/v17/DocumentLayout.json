@@ -1,0 +1,133 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Projects\\MonoGame\\Pongage\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{DB43048E-E861-406A-9544-FA586685CA32}|Pongage.csproj|d:\\projects\\monogame\\pongage\\ball.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB43048E-E861-406A-9544-FA586685CA32}|Pongage.csproj|solutionrelative:ball.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB43048E-E861-406A-9544-FA586685CA32}|Pongage.csproj|D:\\Projects\\MonoGame\\Pongage\\game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB43048E-E861-406A-9544-FA586685CA32}|Pongage.csproj|solutionrelative:game1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB43048E-E861-406A-9544-FA586685CA32}|Pongage.csproj|D:\\Projects\\MonoGame\\Pongage\\globals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB43048E-E861-406A-9544-FA586685CA32}|Pongage.csproj|solutionrelative:globals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB43048E-E861-406A-9544-FA586685CA32}|Pongage.csproj|D:\\Projects\\MonoGame\\Pongage\\content\\ui\\font.spritefont||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{DB43048E-E861-406A-9544-FA586685CA32}|Pongage.csproj|solutionrelative:content\\ui\\font.spritefont||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB43048E-E861-406A-9544-FA586685CA32}|Pongage.csproj|D:\\Projects\\MonoGame\\Pongage\\gameui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB43048E-E861-406A-9544-FA586685CA32}|Pongage.csproj|solutionrelative:gameui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB43048E-E861-406A-9544-FA586685CA32}|Pongage.csproj|D:\\Projects\\MonoGame\\Pongage\\paddle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB43048E-E861-406A-9544-FA586685CA32}|Pongage.csproj|solutionrelative:paddle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB43048E-E861-406A-9544-FA586685CA32}|Pongage.csproj|D:\\Projects\\MonoGame\\Pongage\\managers\\inputmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB43048E-E861-406A-9544-FA586685CA32}|Pongage.csproj|solutionrelative:managers\\inputmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Font.spritefont",
+              "DocumentMoniker": "D:\\Projects\\MonoGame\\Pongage\\Content\\UI\\Font.spritefont",
+              "RelativeDocumentMoniker": "Content\\UI\\Font.spritefont",
+              "ToolTip": "D:\\Projects\\MonoGame\\Pongage\\Content\\UI\\Font.spritefont",
+              "RelativeToolTip": "Content\\UI\\Font.spritefont",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-04-15T22:38:48.11Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GameUI.cs",
+              "DocumentMoniker": "D:\\Projects\\MonoGame\\Pongage\\GameUI.cs",
+              "RelativeDocumentMoniker": "GameUI.cs",
+              "ToolTip": "D:\\Projects\\MonoGame\\Pongage\\GameUI.cs",
+              "RelativeToolTip": "GameUI.cs",
+              "ViewState": "AQIAADkAAAAAAAAAAAAowE0AAACPAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-11T08:42:51.537Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Ball.cs",
+              "DocumentMoniker": "D:\\Projects\\MonoGame\\Pongage\\Ball.cs",
+              "RelativeDocumentMoniker": "Ball.cs",
+              "ToolTip": "D:\\Projects\\MonoGame\\Pongage\\Ball.cs",
+              "RelativeToolTip": "Ball.cs",
+              "ViewState": "AQIAAEYAAAAAAAAAAAAgwGQAAABYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-10T10:57:18.447Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Paddle.cs",
+              "DocumentMoniker": "D:\\Projects\\MonoGame\\Pongage\\Paddle.cs",
+              "RelativeDocumentMoniker": "Paddle.cs",
+              "ToolTip": "D:\\Projects\\MonoGame\\Pongage\\Paddle.cs",
+              "RelativeToolTip": "Paddle.cs",
+              "ViewState": "AQIAADcAAAAAAAAAAAAzwFQAAAA0AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-05T07:58:14.1Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Globals.cs",
+              "DocumentMoniker": "D:\\Projects\\MonoGame\\Pongage\\Globals.cs",
+              "RelativeDocumentMoniker": "Globals.cs",
+              "ToolTip": "D:\\Projects\\MonoGame\\Pongage\\Globals.cs",
+              "RelativeToolTip": "Globals.cs",
+              "ViewState": "AQIAABIAAAAAAAAAAAAqwCIAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-05T09:56:31.888Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Game1.cs",
+              "DocumentMoniker": "D:\\Projects\\MonoGame\\Pongage\\Game1.cs",
+              "RelativeDocumentMoniker": "Game1.cs",
+              "ToolTip": "D:\\Projects\\MonoGame\\Pongage\\Game1.cs",
+              "RelativeToolTip": "Game1.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAACEAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-05T07:53:19.845Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "InputManager.cs",
+              "DocumentMoniker": "D:\\Projects\\MonoGame\\Pongage\\Managers\\InputManager.cs",
+              "RelativeDocumentMoniker": "Managers\\InputManager.cs",
+              "ToolTip": "D:\\Projects\\MonoGame\\Pongage\\Managers\\InputManager.cs",
+              "RelativeToolTip": "Managers\\InputManager.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-05T07:47:19.348Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
