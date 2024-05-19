@@ -21,8 +21,9 @@ namespace Pongage
         public float Speed = 3.2f;
         public float SpeedIncreaseEachBounce = 0.07f;
 
-        public Vector2 Position;
-        private Vector2 Velocity;
+        public Vector2 PositionOld { get; private set; } = Vector2.Zero;
+        public Vector2 Position = Vector2.Zero;
+        private Vector2 Velocity = Vector2.Zero;
         private Vector2 Origin;
         private Rectangle Bounds;
 
@@ -31,6 +32,9 @@ namespace Pongage
         private Rectangle TextureSourceRectangle;
         private Texture2D Texture;
         private Color Color;
+
+        private int PaddleBounceCooldown = 10;
+        private int PaddleBounceCounter = 10;
 
         public Ball(Vector2 position, Texture2D texture, Point size)
         {
@@ -51,18 +55,22 @@ namespace Pongage
 
                 if(TimerForNextRound >= DelayBeforeNextRound)
                 {
+                    // New round
+                    PaddleBounceCounter = 0;
+
                     waitingForNextRound = false;
-                    ResetPosition();
                     TimerForNextRound = 0;
 
                     Speed = DefaultSpeed;
 
+                    ResetPosition();
                     Globals.RightPaddle.ResetPosition();
                     Globals.LeftPaddle.ResetPosition();
 
                     Globals.RandomiseBackgroundColor();
 
                     Globals.RoundStopwatch.Restart();
+                    Globals.GameStopwatch.Start();
                 }
                 else
                 {
@@ -70,32 +78,31 @@ namespace Pongage
                 }
             }
 
-
-            if (Position.X - Origin.X < Globals.GameBounds.X || Position.X + Origin.X > Globals.GameBounds.Width)
-                //Globals.LeftPaddle.GetBounds().Contains(new Vector2(Position.X, Position.Y + Origin.Y)) ||
-                //Globals.LeftPaddle.GetBounds().Contains(new Vector2(Position.X, Position.Y - Origin.Y)) ||
-                //Globals.RightPaddle.GetBounds().Contains(new Vector2(Position.X, Position.Y + Origin.Y)) ||
-                //Globals.RightPaddle.GetBounds().Contains(new Vector2(Position.X, Position.Y - Origin.Y)))
+            // End round if the ball has left the game field
+            if (!Globals.GameBounds.Contains(Position))
             {
                 EndRound();
-                Globals.PlaySound(Sound.RoundEnd);
             }
 
+            if (PaddleBounceCounter > 0)
+                PaddleBounceCounter--;
 
-            Vector2 newVelocity = Vector2.One;
-            if (Globals.LeftPaddle.GetBounds().Contains(new Vector2(Position.X - Origin.X, Position.Y)) &&
-                Position.Y < Globals.LeftPaddle.GetBounds().Y + Globals.LeftPaddle.GetBounds().Height &&
-                Position.Y > Globals.LeftPaddle.GetBounds().Y)
+            //
+            // Collision
+            //
+            Vector2 newVelocity = Vector2.Zero;
+            bool collisionWithPaddle = false;
+            if (Globals.LeftPaddle.GetBounds().Intersects(Bounds))
             {
                 // Collided on the left paddle
                 newVelocity = new Vector2(-Velocity.X, Velocity.Y);
+                collisionWithPaddle = true;
             }
-            else if (Globals.RightPaddle.GetBounds().Contains(new Vector2(Position.X + Origin.X, Position.Y)) &&
-                Position.Y < Globals.RightPaddle.GetBounds().Y + Globals.RightPaddle.GetBounds().Height &&
-                Position.Y > Globals.RightPaddle.GetBounds().Y)
+            else if (Globals.RightPaddle.GetBounds().Intersects(Bounds))
             {
                 // Collided on the right paddle
                 newVelocity = new Vector2(-Velocity.X, Velocity.Y);
+                collisionWithPaddle = true;
             }
             else if(Position.Y - Origin.Y < Globals.GameBounds.Y ||
                 Position.Y + Origin.Y > Globals.GameBounds.Y + Globals.GameBounds.Height)
@@ -103,28 +110,45 @@ namespace Pongage
                 // Collided with the top or bottom wall
                 newVelocity = new Vector2(Velocity.X, -Velocity.Y);
             }
-            else
-            {
+
+
+            PositionOld = Position;
+
+            // No collision
+            if (newVelocity == Vector2.Zero)
+            { 
                 MoveWithVelocity(Vector2.Normalize(Velocity));
-                return;
             }
 
-            Speed += SpeedIncreaseEachBounce;
-            MoveWithVelocity(Vector2.Normalize(newVelocity));
-
-
-            if (CollidingWithPaddles())
-            {
-                EndRound();
-                Globals.PlaySound(Sound.RoundEnd);
-            }
+            // If a collision happened and velocity needs to be changed
             else
             {
+                // Move with the new velocity
+                MoveWithVelocity(Vector2.Normalize(newVelocity));
+
+                // Increase ball speed with every bounce
+                Speed += SpeedIncreaseEachBounce;
+
+                //Debug.WriteLine($"Old Velocity: {Velocity}, New Velocity: {newVelocity}");
+                Velocity = newVelocity;
+
+
+                if (PaddleBounceCounter > 0)
+                {
+                    if(collisionWithPaddle)
+                    {
+                        EndRound();
+                        return;
+                    }  
+                }
+                else
+                {
+                    if(collisionWithPaddle)
+                        PaddleBounceCounter = PaddleBounceCooldown;
+                }
+
                 Globals.PlaySound(Sound.Hit);
             }
-
-            Debug.WriteLine($"Old Velocity: {Velocity}, New Velocity: {newVelocity}");
-            Velocity = newVelocity;
         }
 
         public void MoveWithVelocity(Vector2 velocity)
@@ -134,53 +158,28 @@ namespace Pongage
             UpdateBounds();
         }
 
-        public bool CollidingWithPaddles()
+        
+        public bool IsBehindPaddles(Vector2 position)
         {
-            if (Globals.LeftPaddle.GetBounds().Contains(new Vector2(Position.X - Origin.X, Position.Y)))
+            if (position.X - Origin.X < Globals.LeftPaddle.Position.X - Globals.LeftPaddle.GetOrigin().X)
             {
-                // Collided on the left paddle
+                // Behind the left paddle
                 return true;
             }
-            else if (Globals.RightPaddle.GetBounds().Contains(new Vector2(Position.X + Origin.X, Position.Y)))
+            else if (position.X + Origin.X > Globals.RightPaddle.Position.X + Globals.RightPaddle.GetOrigin().X)
             {
-                // Collided on the right paddle
+                // Behind the right paddle
                 return true;
             }
 
             return false;
         }
 
-        public bool CollidingWithAnyting()
-        {
-            if (Globals.LeftPaddle.GetBounds().Contains(new Vector2(Position.X - Origin.X, Position.Y)))
-            {
-                // Collided on the left paddle
-            }
-            else if (Globals.RightPaddle.GetBounds().Contains(new Vector2(Position.X + Origin.X, Position.Y)))
-            {
-                // Collided on the right paddle
-            }
-            else if (Position.Y - Origin.Y < Globals.GameBounds.Y ||
-                Position.Y + Origin.Y > Globals.GameBounds.Y + Globals.GameBounds.Height ||
-                Globals.LeftPaddle.GetBounds().Contains(new Vector2(Position.X, Position.Y + Origin.Y)) ||
-                Globals.LeftPaddle.GetBounds().Contains(new Vector2(Position.X, Position.Y - Origin.Y)) ||
-                Globals.RightPaddle.GetBounds().Contains(new Vector2(Position.X, Position.Y + Origin.Y)) ||
-                Globals.RightPaddle.GetBounds().Contains(new Vector2(Position.X, Position.Y - Origin.Y)))
-            {
-                // Collided with the top or bottom wall
-            }
-            else
-            {
-                return false;
-            }
-
-            return true;
-        }
-
 
         public void EndRound()
         {
             Globals.RoundStopwatch.Stop();
+            Globals.GameStopwatch.Stop();
 
             if (Position.X < Globals.GameBounds.Width / 2)
             {
@@ -193,11 +192,12 @@ namespace Pongage
                 Globals.LeftPaddle.Score++;
             }
 
-
-            Debug.WriteLine($"Score is now: {Globals.LeftPaddle.Score} - {Globals.RightPaddle.Score}");
+            //Debug.WriteLine($"Score is now: {Globals.LeftPaddle.Score} - {Globals.RightPaddle.Score}");
 
             waitingForNextRound = true;
             GameUI.DisplayScore();
+
+            Globals.PlaySound(Sound.RoundEnd);
         }
 
 
@@ -222,8 +222,11 @@ namespace Pongage
 
         public void ResetPosition()
         {
+            PositionOld = Position;
             Position = StartPosition;
             Position.Y = Globals.Random.Next(Globals.HeaderBounds.Height + Globals.GameBounds.Y + Bounds.Height, Globals.GameBounds.Height - Bounds.Height);
+
+            UpdateBounds();
 
             int rand = Globals.Random.Next(4);
             if (rand == 0)
@@ -237,17 +240,9 @@ namespace Pongage
         }
 
 
-        public bool CheckIfOffscreen()
-        {
-            if (Position.Y - Origin.Y < Globals.GameBounds.Y || Position.Y + Origin.Y > Globals.GameBounds.Height)
-                return true;
-
-            return false;
-        }
-
-
         public void Draw()
         {
+            Globals.SpriteBatch.Draw(Texture, new Rectangle((PositionOld - Origin * 0.8f).ToPoint(), (Size.ToVector2() * 0.8f).ToPoint()), TextureSourceRectangle, new Color(Color.White, 0.4f), 0f, Vector2.Zero, SpriteEffects.None, 0f);
             Globals.SpriteBatch.Draw(Texture, Bounds, TextureSourceRectangle, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
         }
     }

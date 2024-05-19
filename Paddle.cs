@@ -82,7 +82,9 @@ namespace Pongage
 
         public void ResetPosition()
         {
-            Position.Y = Globals.HeaderBounds.Height + Globals.GameBounds.Height / 2;
+            Position.Y = Globals.GameBounds.Y + Globals.GameBounds.Height / 2;
+
+            UpdateBounds();
         }
 
         public void UpdateBounds()

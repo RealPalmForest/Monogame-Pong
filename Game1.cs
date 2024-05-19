@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Pongage.Managers;
+using System.Diagnostics;
 using System.Net.Http.Headers;
 
 namespace Pongage
@@ -31,6 +32,8 @@ namespace Pongage
 
         protected override void Initialize()
         {
+            Globals.KeyboardState = Keyboard.GetState();
+
             base.Initialize();
         }
 
@@ -52,7 +55,7 @@ namespace Pongage
             Globals.RoundEnd = Content.Load<SoundEffect>("Audio/RoundEnd");
 
 
-        PaddleSize = new Point(17, 130);
+            PaddleSize = new Point(17, 130);
             PaddleColor = Color.White;
 
             Globals.RandomiseBackgroundColor();
@@ -65,11 +68,12 @@ namespace Pongage
 
 
             Player1 = new Paddle(Vector2.Zero, PaddleColor, PaddleSize);
-            Player1.ResetPosition();
             Player1.SetDistanceFromEdge(20);
+            Player1.ResetPosition();
+            
             Player2 = new Paddle(Vector2.Zero, PaddleColor, PaddleSize);
-            Player2.ResetPosition();
             Player2.SetDistanceFromEdge(Globals.GameBounds.Width - 20);
+            Player2.ResetPosition();
 
             Globals.LeftPaddle = Player1;
             Globals.RightPaddle = Player2;
@@ -80,21 +84,59 @@ namespace Pongage
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            Globals.OldKeyboardState = Globals.KeyboardState;
+            Globals.KeyboardState = Keyboard.GetState();
+
+            base.Update(gameTime);
+
+            if(Globals.KeyboardState.IsKeyDown(Keys.Space) && Globals.OldKeyboardState.IsKeyUp(Keys.Space))
+            {
+                Globals.IsPaused = !Globals.IsPaused;
+            }
+
+            if(Globals.IsPaused)
+            {
+                if(Globals.GameStopwatch.IsRunning)
+                    TogglePauseGame();
+
+                return;
+            }
+            else
+            {
+                if (!Globals.GameStopwatch.IsRunning)
+                    TogglePauseGame();
+            }
+
+
+            if (!IsActive)
+            {
+                if (Globals.GameStopwatch.IsRunning)
+                    TogglePauseGame();
+
+                Globals.IsPaused = true;
+
+                return;
+            }
+            else
+            {
+                if (!Globals.GameStopwatch.IsRunning)
+                    TogglePauseGame();
+            }
+
+
             // Get Player input
             InputManager.Update();
 
+            GameUI.Update();
+
             // Move Players
-            if(!Ball.waitingForNextRound)
+            if (!Ball.waitingForNextRound)
             {
                 Player1.MoveVertically(InputManager.PlayerOneVerticalVelocity);
                 Player2.MoveVertically(InputManager.PlayerTwoVerticalVelocity);
             }
 
-
             Ball.Update();
-
-
-            base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -110,11 +152,25 @@ namespace Pongage
 
             Ball.Draw();
 
-            GameUI.Update();
+            GameUI.Draw();
 
             _spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        public static void TogglePauseGame()
+        {
+            if (Globals.GameStopwatch.IsRunning)
+                Globals.GameStopwatch.Stop();
+            else
+                Globals.GameStopwatch.Start();
+
+
+            if (Globals.RoundStopwatch.IsRunning)
+                Globals.RoundStopwatch.Stop();
+            else
+                Globals.RoundStopwatch.Start();
         }
     }
 }

@@ -73,6 +73,30 @@
 /processorParam:TextureFormat=Color
 /build:Textures/white.png
 
+#begin UI/Controls1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/Controls1.png;UI/LeftControls.png
+
+#begin UI/Controls2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/Controls2.png;UI/RightControls.png
+
 #begin UI/Font.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

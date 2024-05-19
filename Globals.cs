@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,9 @@ namespace Pongage
 
     public static class Globals
     {
+        public static bool IsPaused = true;
+
+
         public static SoundEffect Hit;
         public static SoundEffect RoundEnd;
 
@@ -39,6 +43,8 @@ namespace Pongage
         public static SpriteBatch SpriteBatch { get; set; }
         public static SpriteFont GameFont { get; set; }
 
+        public static KeyboardState KeyboardState { get; set; }
+        public static KeyboardState OldKeyboardState { get; set; }
 
         public static Color BackgroundColor { get; set; }
 
@@ -55,10 +61,10 @@ namespace Pongage
             switch (sound)
             {
                 case Sound.Hit:
-                    Hit.Play(0.1f, default, default);
+                    Hit.Play(0.08f, default, default);
                     break;
                 case Sound.RoundEnd:
-                    RoundEnd.Play(0.1f, default, default);
+                    RoundEnd.Play(0.04f, default, default);
                     break;
             }
         }
